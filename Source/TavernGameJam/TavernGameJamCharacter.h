@@ -48,7 +48,7 @@ private:
 protected:
 	
 	void Move(const FInputActionValue& Value);
-	void Test();
+	
 
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	
