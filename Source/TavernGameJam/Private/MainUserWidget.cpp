@@ -16,38 +16,49 @@ void UMainUserWidget::StartWriting(FString savedString, bool savedBool)
 {
 	stringToType = savedString;
 	bCanStartDialogue = savedBool;
+	bIsComplete = false;
+	
 }
 
+void UMainUserWidget::ClearString()
+{
+	characterToAdd = 0;
+	newString = "";
+	stringToType = "";
+	bIsComplete = true;
+	bCanStartDialogue = false;
+}
 
 
 void UMainUserWidget::TypeOutString()
 {
-		float typeSpeed = 10;
-	
 		if(!bIsComplete)
 		{
-			TChar characters[] = stringToType.GetCharArray();
-			
-			
 				typeTimer -= GetWorld()->DeltaTimeSeconds * typeSpeed;
-				UE_LOG(LogTemp, Warning, TEXT("Type Timer: %s"), *stringToType);
 				if(typeTimer <= 0)
 				{
-					newString += characters[characterToAdd];
-					typeTimer = timerMax;
-
-					characterToAdd++;
-
+					if(characterToAdd < stringToType.Len())
+					{
+						newString += stringToType[characterToAdd];
+						typeTimer = timerMax;
+						characterToAdd++;
+					}
+					
 					if(newString.Len() >= stringToType.Len())
 						bIsComplete = true;
 
 					return;
 				}
-			
 		}
 	
-
 	bIsComplete = (newString.Len() >= stringToType.Len());
 }
+
+void UMainUserWidget::SkipToString()
+{
+	bIsComplete = true;
+	newString = stringToType;
+}
+
 
 

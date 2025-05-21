@@ -74,12 +74,6 @@ void ATavernGameJamCharacter::SetupPlayerInputComponent(UInputComponent* PlayerI
 
 }
 
-void ATavernGameJamCharacter::Test()
-{
-	UE_LOG(LogTemp, Error, TEXT("'%s' Failed to find an Enhanced Input component! This template is built to use the Enhanced Input system. If you intend to use the legacy system, then you will need to update this C++ file."), *GetNameSafe(this));
-
-}
-
 
 void ATavernGameJamCharacter::Move(const FInputActionValue& Value)
 {
@@ -91,7 +85,7 @@ void ATavernGameJamCharacter::Move(const FInputActionValue& Value)
 	{
 		// find out which way is forward
 		const FRotator Rotation = Controller->GetControlRotation();
-		const FRotator YawRotation(0, Rotation.Yaw, 0);
+		const FRotator YawRotation(0, Rotation.Yaw + 45, 0);
 
 		// get forward vector
 		const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);

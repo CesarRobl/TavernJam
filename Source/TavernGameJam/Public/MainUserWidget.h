@@ -27,22 +27,39 @@ class TAVERNGAMEJAM_API UMainUserWidget : public UUserWidget
 			return bCanStartDialogue;
 		}
 
+		UFUNCTION(BlueprintCallable)
+		bool IsTalking()
+		{
+			return bIsComplete;
+		}
+
 	protected:
 
 		UPROPERTY(BlueprintReadWrite)
 		FString newString;
+
+		UPROPERTY(BlueprintReadWrite)
+		float typeSpeed = 50;
 
 		
 	
 		float typeTimer = 30, timerMax = 30;
 		int characterToAdd = 0;
 		FString stringToType;
-		bool bIsComplete,bCanStartDialogue = false;;
+		bool bIsComplete = true,bCanStartDialogue = false;;
 
 		
 
 		UFUNCTION(BlueprintCallable)
 		void TypeOutString();
+
+		UFUNCTION(BlueprintCallable)
+		void SkipToString();
+
+		UFUNCTION(BlueprintCallable)
+		void ClearString();
+
+		
 
 	
 	
