@@ -2,28 +2,63 @@
 
 
 #include "MainUserWidget.h"
-
-void UMainUserWidget::TypeOutString(FString stringToType, float typeSpeed, FString& outString, bool& bIsComplete)
+void UMainUserWidget::NativeTick(const FGeometry& MyGeometry, float InDeltaTime)
 {
-	outString = "";
-	bIsComplete = false;
-			
-	for (TCHAR character : stringToType)
+	Super::NativeTick(MyGeometry, InDeltaTime);
+
+	if (bCanStartDialogue)
 	{
-		typeTimer -= GetWorld()->DeltaTimeSeconds * typeSpeed;
-		if(typeSpeed <= 0)
-		{
-			outString += character;
-			typeTimer = timerMax;
-
-			if(outString.Len() >= stringToType.Len())
-				bIsComplete = true;
-
-			return;
-		}
+		TypeOutString();
 	}
-
-	bIsComplete = (outString.Len() >= stringToType.Len());
 }
+
+void UMainUserWidget::StartWriting(FString savedString, bool savedBool)
+{
+	stringToType = savedString;
+	bCanStartDialogue = savedBool;
+	bIsComplete = false;
+	
+}
+
+void UMainUserWidget::ClearString()
+{
+	characterToAdd = 0;
+	newString = "";
+	stringToType = "";
+	bIsComplete = true;
+	bCanStartDialogue = false;
+}
+
+
+void UMainUserWidget::TypeOutString()
+{
+		if(!bIsComplete)
+		{
+				typeTimer -= GetWorld()->DeltaTimeSeconds * typeSpeed;
+				if(typeTimer <= 0)
+				{
+					if(characterToAdd < stringToType.Len())
+					{
+						newString += stringToType[characterToAdd];
+						typeTimer = timerMax;
+						characterToAdd++;
+					}
+					
+					if(newString.Len() >= stringToType.Len())
+						bIsComplete = true;
+
+					return;
+				}
+		}
+	
+	bIsComplete = (newString.Len() >= stringToType.Len());
+}
+
+void UMainUserWidget::SkipToString()
+{
+	bIsComplete = true;
+	newString = stringToType;
+}
+
 
 
