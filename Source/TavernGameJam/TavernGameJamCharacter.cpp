@@ -1,6 +1,9 @@
 // Copyright Epic Games, Inc. All Rights Reserved.
 
 #include "TavernGameJamCharacter.h"
+
+#include <ThirdParty/Imath/Deploy/Imath-3.1.9/include/Imath/ImathMath.h>
+
 #include "UObject/ConstructorHelpers.h"
 #include "Camera/CameraComponent.h"
 #include "Components/DecalComponent.h"
@@ -93,15 +96,36 @@ void ATavernGameJamCharacter::Move(const FInputActionValue& Value)
 		// get right vector 
 		const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
-		// add movement 
-		AddMovementInput(ForwardDirection, MovementVector.Y);
-		AddMovementInput(RightDirection, MovementVector.X);
+		if(bPlayerCanWalk)
+		{
+			// add movement 
+			AddMovementInput(ForwardDirection, MovementVector.Y);
+			AddMovementInput(RightDirection, MovementVector.X);
+		}
 	}
 }
 
+void ATavernGameJamCharacter::CameraZoomIn()
+{
+	float fieldOfView = TopDownCameraComponent->FieldOfView;
+	float T = 0.15f;
+	
+	if(!bPlayerCanWalk)
+	{
+		 fieldOfView = FMath::Lerp(fieldOfView, 30, T);
+	}
+	else
+	{
+		fieldOfView = FMath::Lerp(fieldOfView, 55, T);
+	}
+
+	TopDownCameraComponent->FieldOfView = fieldOfView;
+}
 
 
 void ATavernGameJamCharacter::Tick(float DeltaSeconds)
 {
     Super::Tick(DeltaSeconds);
+
+	CameraZoomIn();
 }
