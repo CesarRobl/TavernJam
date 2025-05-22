@@ -24,3 +24,4 @@ ATavernGameJamGameMode::ATavernGameJamGameMode()
 		PlayerControllerClass = PlayerControllerBPClass.Class;
 	}
 }
+
