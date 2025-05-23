@@ -23,6 +23,8 @@ class ATavernGameJamCharacter : public ACharacter
 	/** Move Input Action */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
 	UInputAction* MoveAction;
+
+	
 	
 
 public:
@@ -46,11 +48,19 @@ private:
 	USpringArmComponent* CameraBoom;
 
 protected:
+
+	
+	bool bPlayerCanWalk = true;
+
+	UFUNCTION(BlueprintCallable)
+	void SetWalkState(bool walkState)
+	{
+		bPlayerCanWalk = walkState;
+	}
 	
 	void Move(const FInputActionValue& Value);
-	
-
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
+	void CameraZoomIn();
 	
 };
 

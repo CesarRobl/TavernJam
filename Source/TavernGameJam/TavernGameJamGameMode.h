@@ -30,7 +30,32 @@ struct FDialogueData : public FTableRowBase
 	FString LineText;
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	FString ResponseID;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	int32 LineOrder;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	int32 ResponseAmount;
+};
+
+USTRUCT()
+struct FResponseData : public FTableRowBase
+{
+	GENERATED_BODY()
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	FString SpeakerName;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	FString LineText;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	FString ResponseID;
+
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	int32 LineOrder;
+	
 };
 
 
