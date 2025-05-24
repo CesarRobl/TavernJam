@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GameplayTagContainer.h"
 #include "GameFramework/GameModeBase.h"
 #include "TavernGameJamGameMode.generated.h"
 
@@ -43,10 +44,7 @@ USTRUCT()
 struct FResponseData : public FTableRowBase
 {
 	GENERATED_BODY()
-
-	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	FString SpeakerName;
-
+	
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
 	FString LineText;
 
@@ -54,10 +52,11 @@ struct FResponseData : public FTableRowBase
 	FString ResponseID;
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite)
-	int32 LineOrder;
-	
-};
+	int32 LineAmount;
 
+	UPROPERTY(EditAnywhere,BlueprintReadWrite)
+	FGameplayTag ActionTag;
+};
 
 
 
